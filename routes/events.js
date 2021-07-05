@@ -2,6 +2,9 @@ const express = require("express")
 const router = express.Router()
 const Event = require('../models/Event')
 const { check, validationResult } = require('express-validator');
+const moment = require('moment'); // require
+moment().format(); 
+
 
 router.get('/events/create', (req,res)=> {
 
@@ -44,5 +47,28 @@ router.post('/events/create',[
         })
     }
 })
+
+//edit router
+router.get('/events/edit/:id', (req,res)=> {
+    Event.findOne({_id: req.params.id}, (err,event)=> {
+      
+        if(!err) {
+            
+         res.render('pages/edit', {
+             event: event,
+             eventDate: moment(event.data).format('YYYY-MM-DD')
+         })
+   
+        } else {
+            console.log(err)
+        }
+     
+     })
+})
+//update the form 
+router.post('/update', (req,res)=> {
+
+})
+
 
   module.exports = router 
