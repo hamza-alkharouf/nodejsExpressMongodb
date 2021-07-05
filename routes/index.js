@@ -8,6 +8,8 @@ const image=require('./image')
 router.use(about)
 router.use(image)
 
+const eventss=require('./events.js')
+router.use(eventss)
 /* GET home page. */
 // index page
 router.get('/', function(req, res) {
@@ -31,15 +33,15 @@ router.get('/', function(req, res) {
          res.render('pages/index', {
           mascots: mascots,
           tagline: tagline,
-          chunk : chunk
+          chunk : chunk,
+          message: req.flash('info')
         })
      })
 
     })
 
-
 // show single event
-router.get('/:id', (req,res)=> {
+router.get('/events/:id', (req,res)=> {
   Event.findOne({_id: req.params.id}, (err,event)=> {
       
      if(!err) {
@@ -55,6 +57,7 @@ router.get('/:id', (req,res)=> {
   })
 
 })
+
 
 
 
